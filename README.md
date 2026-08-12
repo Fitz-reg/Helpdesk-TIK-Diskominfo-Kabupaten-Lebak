@@ -18,9 +18,9 @@ Cukup **1 perintah**, seluruh web server (PHP 8.2), database MySQL 8.0, 13 tiket
    docker compose up -d
    ```
 3. Akses aplikasi di browser:
-   - **Portal Helpdesk Utama**: [`http://localhost:8080`](http://localhost:8080)
-   - **Halaman Login User**: [`http://localhost:8080/login.php`](http://localhost:8080/login.php)
-   - **Panel Admin**: [`http://localhost:8080/admin/`](http://localhost:8080/admin/)
+   - **Portal Helpdesk Utama**: [`http://localhost:8089`](http://localhost:8089)
+   - **Halaman Login User**: [`http://localhost:8089/login.php`](http://localhost:8089/login.php)
+   - **Panel Admin**: [`http://localhost:8089/admin/`](http://localhost:8089/admin/)
    - **phpMyAdmin (Docker)**: [`http://localhost:8081`](http://localhost:8081)
 
 *Catatan: Database & data dummy otomatis ter-import secara instan oleh Docker tanpa perlu konfigurasi manual!*
@@ -40,7 +40,7 @@ Jika Anda atau tim menggunakan **WSL / WSL 2 (Ubuntu/Linux di Windows)**:
    ```bash
    docker compose up -d
    ```
-   *Aplikasi dapat diakses di browser Windows via: [`http://localhost:8080`](http://localhost:8080)*
+   *Aplikasi dapat diakses di browser Windows via: [`http://localhost:8089`](http://localhost:8089)*
 
 4. **Atau Import Manual via MySQL WSL**:
    ```bash

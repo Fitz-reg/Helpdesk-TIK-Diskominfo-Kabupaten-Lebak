@@ -47,20 +47,18 @@ require_once(TEMPLATE_PATH . 'customer/inc/header.inc.php');
     </div>
 </section>
 
-<div class="main__content" style="padding-top: 0;">
-    <div class="contr">
+<div class="main__content" style="padding-top: 0; position: relative; z-index: 100;">
+    <?php if (!empty($messages) || !empty($serviceMessages)): ?>
+    <div class="contr" style="margin-bottom: 24px; padding-top: 16px;">
         <?php if (!empty($messages)): ?>
-        <div style="margin-top: 20px;">
             <?php hesk3_show_messages($messages); ?>
-        </div>
         <?php endif; ?>
         
         <?php if (!empty($serviceMessages)): ?>
-        <div style="margin-top: 20px;">
             <?php hesk3_show_messages($serviceMessages); ?>
-        </div>
         <?php endif; ?>
     </div>
+    <?php endif; ?>
 
     <!-- ==================== QUICK ACTION GRID ==================== -->
     <div class="dkt-section">

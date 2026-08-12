@@ -7,10 +7,16 @@
 // =========================================================================
 // 1. GENERAL SYSTEM SETTINGS
 // =========================================================================
+$scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+$host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+$script_name = $_SERVER['SCRIPT_NAME'] ?? '';
+$dir = rtrim(dirname($script_name), '/\\');
+$base_path = ($dir === '/' || $dir === '.' || $dir === '\\') ? '' : $dir;
+
 $hesk_settings['site_title']       = 'Diskominfo Kabupaten Lebak';
-$hesk_settings['site_url']         = 'http://localhost';
+$hesk_settings['site_url']         = $scheme . '://' . $host;
 $hesk_settings['hesk_title']       = 'Helpdesk TIK Diskominfo Kabupaten Lebak';
-$hesk_settings['hesk_url']         = 'http://localhost/helpdesk';
+$hesk_settings['hesk_url']         = getenv('HESK_URL') ?: ($scheme . '://' . $host . $base_path);
 $hesk_settings['webmaster_mail']   = 'support@example.com';
 $hesk_settings['site_theme']       = 'hesk3';
 $hesk_settings['admin_css']        = 0;

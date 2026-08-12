@@ -295,7 +295,7 @@ function validate_data() {
         }
     }
 
-    if ($hesk_settings['secimg_use'] && !isset($_SESSION['img_verified']))
+    if (false && $hesk_settings['secimg_use'] && !isset($_SESSION['img_verified']))
     {
         // Using reCAPTCHA?
         if ($hesk_settings['recaptcha_use'])

@@ -1,0 +1,14 @@
+# GitIgnore for Helpdesk TIK Diskominfo Lebak
+/attachments/*
+!/attachments/.htaccess
+!/attachments/index.htm
+/cache/*
+!/cache/.htaccess
+!/cache/index.htm
+/scratch/
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -27,10 +27,10 @@ $hesk_settings['languages']        = array(
 );
 
 // Database Connection Settings
-$hesk_settings['db_host']          = 'localhost';
-$hesk_settings['db_name']          = 'hesk_db';
-$hesk_settings['db_user']          = 'root';
-$hesk_settings['db_pass']          = '';
+$hesk_settings['db_host']          = getenv('DB_HOST') ?: 'localhost';
+$hesk_settings['db_name']          = getenv('DB_NAME') ?: 'hesk_db';
+$hesk_settings['db_user']          = getenv('DB_USER') ?: 'root';
+$hesk_settings['db_pass']          = getenv('DB_PASS') !== false ? getenv('DB_PASS') : '';
 $hesk_settings['db_pfix']          = 'hesk_';
 
 // =========================================================================

@@ -2,9 +2,56 @@
 
 Sistem pelayanan & helpdesk TIK berbasis HESK 3 yang dikustomisasi dengan UI/UX Diskominfo Kab. Lebak, dilengkapi dengan REST API layer internal dan data dummy untuk pengujian.
 
+## ⚡ Panduan Setup Cepat
+
+Anda dapat menjalankan aplikasi ini dengan 2 metode: **Menggunakan Docker (Sangat Direkomendasikan / 1 Command)** atau **Menggunakan XAMPP/Laragon Manual**.
+
 ---
 
-## Cara Setup di Lokal
+### 🐳 Metode 1: Menggunakan Docker (1 Command Setup - Sangat Direkomendasikan)
+
+Cukup **1 perintah**, seluruh web server (PHP 8.2), database MySQL 8.0, 13 tiket dummy, dan phpMyAdmin akan **otomatis terkonfigurasi & siap dipakai**:
+
+1. Pastikan **Docker Desktop** sudah berjalan di PC Anda.
+2. Buka Terminal / CMD di folder project (`c:/xampp/htdocs/helpdesk`) lalu jalankan:
+   ```bash
+   docker compose up -d
+   ```
+3. Akses aplikasi di browser:
+   - **Portal Helpdesk Utama**: [`http://localhost:8080`](http://localhost:8080)
+   - **Halaman Login User**: [`http://localhost:8080/login.php`](http://localhost:8080/login.php)
+   - **Panel Admin**: [`http://localhost:8080/admin/`](http://localhost:8080/admin/)
+   - **phpMyAdmin (Docker)**: [`http://localhost:8081`](http://localhost:8081)
+
+*Catatan: Database & data dummy otomatis ter-import secara instan oleh Docker tanpa perlu konfigurasi manual!*
+
+---
+
+### 🐧 Metode 3: Menggunakan WSL (Windows Subsystem for Linux)
+
+Jika Anda atau tim menggunakan **WSL / WSL 2 (Ubuntu/Linux di Windows)**:
+
+1. Buka Terminal **WSL** Anda.
+2. Masuk ke direktori project Windows via WSL:
+   ```bash
+   cd /mnt/c/xampp/htdocs/helpdesk
+   ```
+3. **Jalankan via Docker di WSL** (Pastikan Docker Desktop WSL 2 integration aktif):
+   ```bash
+   docker compose up -d
+   ```
+   *Aplikasi dapat diakses di browser Windows via: [`http://localhost:8080`](http://localhost:8080)*
+
+4. **Atau Import Manual via MySQL WSL**:
+   ```bash
+   sudo service mysql start
+   sudo mysql -u root -e "CREATE DATABASE hesk_db;"
+   sudo mysql -u root hesk_db < database.sql
+   ```
+
+---
+
+### 💻 Metode 2: Menggunakan XAMPP / Laragon (Manual)
 
 ### Prasyarat
 - XAMPP atau Laragon (PHP 8.x, MySQL/MariaDB, Apache)

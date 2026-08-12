@@ -1,0 +1,46 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: helpdesk_web
+    ports:
+      - '8080:80'
+    environment:
+      - DB_HOST=db
+      - DB_NAME=hesk_db
+      - DB_USER=root
+      - DB_PASS=rootpassword
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: mysql:8.0
+    container_name: helpdesk_db
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: hesk_db
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database.sql:/docker-entrypoint-initdb.d/database.sql
+    restart: always
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: helpdesk_phpmyadmin
+    ports:
+      - '8081:80'
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: rootpassword
+    depends_on:
+      - db
+    restart: always
+
+volumes:
+  db_data:

@@ -1,11 +1,9 @@
 services:
-  web:
+  phpfpm:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: helpdesk_web
-    ports:
-      - '8089:80'
+    container_name: helpdesk_phpfpm
     environment:
       - DB_HOST=db
       - DB_NAME=hesk_db
@@ -16,6 +14,22 @@ services:
     depends_on:
       - db
     restart: always
+    networks:
+      - helpdesk_net
+
+  nginx:
+    image: nginx:alpine
+    container_name: helpdesk_nginx
+    ports:
+      - '8089:80'
+    volumes:
+      - .:/var/www/html
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - phpfpm
+    restart: always
+    networks:
+      - helpdesk_net
 
   db:
     image: mysql:8.0
@@ -29,6 +43,8 @@ services:
       - db_data:/var/lib/mysql
       - ./database.sql:/docker-entrypoint-initdb.d/database.sql
     restart: always
+    networks:
+      - helpdesk_net
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -41,6 +57,12 @@ services:
     depends_on:
       - db
     restart: always
+    networks:
+      - helpdesk_net
+
+networks:
+  helpdesk_net:
+    driver: bridge
 
 volumes:
   db_data:

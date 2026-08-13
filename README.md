@@ -1,103 +1,113 @@
 # Helpdesk TIK Diskominfo Kabupaten Lebak
 
-Sistem pelayanan & helpdesk TIK berbasis HESK 3 yang dikustomisasi dengan UI/UX Diskominfo Kab. Lebak, dilengkapi dengan REST API layer internal dan data dummy untuk pengujian.
-
-## ⚡ Panduan Setup Cepat
-
-Anda dapat menjalankan aplikasi ini dengan 2 metode: **Menggunakan Docker (Sangat Direkomendasikan / 1 Command)** atau **Menggunakan XAMPP/Laragon Manual**.
+Sistem helpdesk TIK berbasis HESK 3.7.11 yang dikustomisasi untuk Diskominfo Kab. Lebak. Dilengkapi REST API layer internal dan data dummy untuk pengujian.
 
 ---
 
-### 🐳 Metode 1: Menggunakan Docker (1 Command Setup - Sangat Direkomendasikan)
+## Stack
 
-Cukup **1 perintah**, seluruh web server (PHP 8.2), database MySQL 8.0, 13 tiket dummy, dan phpMyAdmin akan **otomatis terkonfigurasi & siap dipakai**:
-
-1. Pastikan **Docker Desktop** sudah berjalan di PC Anda.
-2. Buka Terminal / CMD di folder project (`c:/xampp/htdocs/helpdesk`) lalu jalankan:
-   ```bash
-   docker compose up -d
-   ```
-3. Akses aplikasi di browser:
-   - **Portal Helpdesk Utama**: [`http://localhost:8089`](http://localhost:8089)
-   - **Halaman Login User**: [`http://localhost:8089/login.php`](http://localhost:8089/login.php)
-   - **Panel Admin**: [`http://localhost:8089/admin/`](http://localhost:8089/admin/)
-   - **phpMyAdmin (Docker)**: [`http://localhost:8081`](http://localhost:8081)
-
-*Catatan: Database & data dummy otomatis ter-import secara instan oleh Docker tanpa perlu konfigurasi manual!*
+- **Web Server**: Nginx 1.31 + PHP-FPM 8.2
+- **Database**: MySQL 8.0
+- **Framework**: HESK 3.7.11
 
 ---
 
-### 🐧 Metode 3: Menggunakan WSL (Windows Subsystem for Linux)
+## Setup dengan Docker (Direkomendasikan)
 
-Jika Anda atau tim menggunakan **WSL / WSL 2 (Ubuntu/Linux di Windows)**:
+Pastikan **Docker Desktop** sudah berjalan, lalu jalankan:
 
-1. Buka Terminal **WSL** Anda.
-2. Masuk ke direktori project Windows via WSL:
-   ```bash
-   cd /mnt/c/xampp/htdocs/helpdesk
-   ```
-3. **Jalankan via Docker di WSL** (Pastikan Docker Desktop WSL 2 integration aktif):
-   ```bash
-   docker compose up -d
-   ```
-   *Aplikasi dapat diakses di browser Windows via: [`http://localhost:8089`](http://localhost:8089)*
+```bash
+docker compose up -d
+```
 
-4. **Atau Import Manual via MySQL WSL**:
-   ```bash
-   sudo service mysql start
-   sudo mysql -u root -e "CREATE DATABASE hesk_db;"
-   sudo mysql -u root hesk_db < database.sql
-   ```
+Selesai. Database dan data dummy otomatis ter-import.
 
----
+Akses aplikasi:
 
-### 💻 Metode 2: Menggunakan XAMPP / Laragon (Manual)
+| Layanan | URL |
+| :--- | :--- |
+| Portal Helpdesk | http://localhost:8089 |
+| Login User | http://localhost:8089/login.php |
+| Panel Admin | http://localhost:8089/admin/ |
+| phpMyAdmin | http://localhost:8081 |
 
-### Prasyarat
-- XAMPP atau Laragon (PHP 8.x, MySQL/MariaDB, Apache)
-- Browser modern
+### Setelah git pull (jika ada perubahan Dockerfile atau docker-compose.yml)
 
-### Langkah Instalasi
-1. Clone atau ekstrak repositori ini ke folder `htdocs` (misal: `C:/xampp/htdocs/helpdesk`).
-2. Buka **phpMyAdmin** (`http://localhost/phpmyadmin`), lalu buat database baru dengan nama `hesk_db` (Collation: `utf8mb4_general_ci`).
-3. Import file `database.sql` yang ada di root direktori ke database `hesk_db`.
-4. Jalankan aplikasi lewat browser:
-   - **Portal Utama**: `http://localhost/helpdesk`
-   - **Login User**: `http://localhost/helpdesk/login.php`
-   - **Panel Admin**: `http://localhost/helpdesk/admin/`
+```bash
+docker compose down --remove-orphans
+docker compose build
+docker compose up -d
+```
+
+> Gunakan `--remove-orphans` untuk membersihkan container lama yang nama service-nya mungkin sudah berubah. Data database pada volume `db_data` tidak akan terhapus.
 
 ---
 
-## Akun Demo (Data Dummy)
+## Setup Manual dengan XAMPP / Laragon
+
+**Prasyarat**: XAMPP atau Laragon (PHP 8.x, MySQL/MariaDB, Apache)
+
+1. Clone atau ekstrak repositori ke folder `htdocs` (misal: `C:/xampp/htdocs/helpdesk`).
+2. Buka phpMyAdmin (`http://localhost/phpmyadmin`), buat database baru bernama `hesk_db` (Collation: `utf8mb4_general_ci`).
+3. Import file `database.sql` ke database `hesk_db`.
+4. Akses aplikasi:
+   - Portal Utama: `http://localhost/helpdesk`
+   - Login User: `http://localhost/helpdesk/login.php`
+   - Panel Admin: `http://localhost/helpdesk/admin/`
+
+---
+
+## Setup via WSL
+
+```bash
+cd /mnt/c/xampp/htdocs/helpdesk
+docker compose up -d
+```
+
+Akses di browser Windows: `http://localhost:8089`
+
+Atau import manual via MySQL WSL:
+
+```bash
+sudo service mysql start
+sudo mysql -u root -e "CREATE DATABASE hesk_db;"
+sudo mysql -u root hesk_db < database.sql
+```
+
+---
+
+## Akun Demo
 
 **User / OPD**
-- URL: `http://localhost/helpdesk/login.php`
+
+- URL: `http://localhost:8089/login.php`
 - Email: `user@lebakkab.go.id`
 - Password: `User1234!`
-- *Catatan: Sudah ada 13 contoh tiket dari 11 kategori layanan TIK lengkap dengan riwayat balasan.*
+- Tersedia 13 contoh tiket dari 11 kategori layanan TIK lengkap dengan riwayat balasan.
 
 **Admin / Staff TIK**
-- URL: `http://localhost/helpdesk/admin/`
+
+- URL: `http://localhost:8089/admin/`
 - Username: `Administrator`
 - Password: `Admin1234!`
 
 ---
 
-## Dokumentasi REST API (`/api/`)
+## REST API
 
-Aplikasi ini menyediakan REST API layer (JSON) untuk integrasi frontend atau aplikasi mobile:
+Endpoint tersedia di `/api/` dengan response format JSON.
 
 | Endpoint | Method | Keterangan |
 | :--- | :---: | :--- |
 | `/api/index.php` | `GET` | Status API & versi sistem |
-| `/api/auth.php?action=login` | `POST` | Login akun (menerima JSON `email` & `password`) |
+| `/api/auth.php?action=login` | `POST` | Login akun (body: `email`, `password`) |
 | `/api/auth.php?action=check` | `GET` | Cek status sesi login |
-| `/api/auth.php?action=logout` | `POST` | Logout dari sistem |
-| `/api/categories.php` | `GET` | Mengambil 11 kategori layanan TIK |
-| `/api/tickets.php?action=list` | `GET` | Mengambil daftar tiket akun yang login |
+| `/api/auth.php?action=logout` | `POST` | Logout |
+| `/api/categories.php` | `GET` | Daftar 11 kategori layanan TIK |
+| `/api/tickets.php?action=list` | `GET` | Daftar tiket akun yang login |
 | `/api/tickets.php?action=detail&track=ID` | `GET` | Detail tiket & riwayat percakapan |
-| `/api/profile.php?action=get` | `GET` | Mengambil data profil user |
-| `/api/profile.php?action=update` | `POST` | Update nama profil user |
+| `/api/profile.php?action=get` | `GET` | Data profil user |
+| `/api/profile.php?action=update` | `POST` | Update nama profil |
 
 ---
 
@@ -107,13 +117,15 @@ Aplikasi ini menyediakan REST API layer (JSON) untuk integrasi frontend atau apl
 helpdesk/
 ├── admin/                 # Panel Admin & Staff TIK
 ├── api/                   # REST API Layer (Auth, Tickets, Categories, Profile)
-│   ├── index.php          # Router & JSON dispatcher
-│   ├── auth.php           # Auth endpoint
-│   ├── categories.php     # Endpoint kategori layanan
-│   ├── tickets.php        # Endpoint daftar & detail tiket
-│   └── profile.php        # Endpoint manajemen profil
+│   ├── index.php
+│   ├── auth.php
+│   ├── categories.php
+│   ├── tickets.php
+│   └── profile.php
 ├── attachments/           # File lampiran tiket
 ├── cache/                 # Cache sistem
+├── nginx/                 # Konfigurasi Nginx
+│   └── nginx.conf
 ├── inc/                   # Core PHP libraries & fungsi HESK
 ├── theme/                 # Custom view & aset UI Diskominfo
 │   └── hesk3/customer/
@@ -124,10 +136,13 @@ helpdesk/
 │       ├── img/           # Asset gambar & logo
 │       └── inc/           # Layout components (Header, Footer, Nav)
 ├── database.sql           # Dump database + data dummy
+├── docker-compose.yml     # Konfigurasi Docker (Nginx, PHP-FPM, MySQL, phpMyAdmin)
+├── Dockerfile             # PHP-FPM 8.2 image
 ├── hesk_settings.inc.php  # Konfigurasi utama (DB, feature flags, CAPTCHA)
-├── index.php              # Beranda
-├── login.php              # Halaman Login
-├── register.php           # Halaman Register
-├── profile.php            # Pengaturan Akun
-├── my_tickets.php         # Daftar Tiket Saya
-└── ticket.php             # Detail Tiket
+├── index.php
+├── login.php
+├── register.php
+├── profile.php
+├── my_tickets.php
+└── ticket.php
+```
